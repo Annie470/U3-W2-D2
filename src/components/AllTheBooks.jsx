@@ -1,7 +1,7 @@
 import { Container, Row, Col, Card, Button} from 'react-bootstrap';
 import horrorBooks from './assets/data/horror.json';
 
-function CardsContainer() {
+const CardsContainer=()=> {
   return ( 
     <Container fluid className='p-3 bg-warning-subtle'>
         <Row className='g-2'>

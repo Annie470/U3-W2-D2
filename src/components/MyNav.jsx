@@ -4,7 +4,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
 
-function CustomNav() {
+const CustomNav=()=> {
   return (
     <Navbar expand="lg" className="bg-warning">
      <Container fluid className='d-flex align-items-center'>

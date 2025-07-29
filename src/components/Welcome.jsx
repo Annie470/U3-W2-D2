@@ -1,7 +1,7 @@
 import Alert from 'react-bootstrap/Alert';
 import { Container } from 'react-bootstrap';
 
-function Welcome() {
+const Welcome=()=> {
   return (
     <Container fluid className='bg-warning-subtle py-3 border-top border-black'>
     <Alert variant="light" className='text-center border-1 border-warning mx-auto my-0 w-75'>

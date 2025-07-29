@@ -1,9 +1,10 @@
-import { Component } from "react";
+
 import { ListGroup, Button } from "react-bootstrap";
 
-class SingleComment extends Component {
-  delComm = () => {
-    fetch("https://striveschool-api.herokuapp.com/api/comments/" + this.props.comment._id, {
+const SingleComment =(props)=> {
+  
+  const delComm = () => {
+    fetch("https://striveschool-api.herokuapp.com/api/comments/" + props.comment._id, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -14,6 +15,7 @@ class SingleComment extends Component {
       .then((response) => {
         if (response.ok) {
           alert("Commento eliminato!");
+          props.setForUp(!props.forUp);
         } else {
           alert("Errore nell'eliminazione del commento");
         }
@@ -23,21 +25,19 @@ class SingleComment extends Component {
         alert("Errore di rete");
       });
   };
-
-  render() {
-
+ 
     return (
       <>
      
         <ListGroup>
-          <ListGroup.Item key={this.props.comment._id} className="text-dark">
-            <h6 className="text-danger">{this.props.comment.author}</h6>
-            <p>{this.props.comment.comment}</p>
+          <ListGroup.Item key={props.comment._id} className="text-dark">
+            <h6 className="text-danger">{props.comment.author}</h6>
+            <p>{props.comment.comment}</p>
             <p className="text-end">
-              {new Date(this.props.comment.createdAt).toLocaleDateString()}
+              {new Date(props.comment.createdAt).toLocaleDateString()}
             </p>
             <div className="text-end">
-              <Button variant="danger" size="sm" onClick={this.delComm}>
+              <Button variant="danger" size="sm" onClick={delComm}>
                 Elimina
               </Button>
             </div>
@@ -46,6 +46,6 @@ class SingleComment extends Component {
       </>
     );
   }
-}
+
 
 export default SingleComment;
