@@ -1,21 +1,14 @@
 import SingleBook from "./SingleBook";
 import { Container, Row, Col, Form} from "react-bootstrap";
-import { Component } from "react";
+import { useState } from "react";
 import CommentArea from "./CommentArea";
 
-class BookList extends Component { 
-     state = {
-            cercato : "",
-            id :""
-        }
-        changeState = (newState) => {
-    this.setState(newState)
-  }
-    render () {
-        //   const { arrayBook } = this.props per scrivere dopo direttamente
-        // const filtrati = arrayBook.filter etc..;
-    const filtrati =this.props.arrayBook.filter((book) =>
-      book.title.toLowerCase().includes(this.state.cercato.toLowerCase())
+const BookList =(props)=> {
+  const [cercato, setCercato] = useState("")
+  const [id, setId] = useState("")
+
+    const filtrati =props.arrayBook.filter((book) =>
+      book.title.toLowerCase().includes(cercato.toLowerCase())
     );
 return (
     <>
@@ -24,8 +17,8 @@ return (
         <Form.Control className="border border-warning"
           type="text"
           placeholder="Cerca.."
-          value={this.state.cercato}
-          onChange={(e) => this.setState({ cercato: e.target.value })}
+          value={cercato}
+          onChange={(e) => setCercato(e.target.value)}
         />
       </Form.Group>
     <Container fluid className="py-3 w-75">
@@ -34,18 +27,18 @@ return (
         <Row className="justify-content-center gy-2">
       {filtrati.map((book) => (
           <Col xs={12} md={4} lg={4} key={book.asin}>
-        <SingleBook  book={book} setStateBookList={this.changeState} id={this.state.id} />
+        <SingleBook  book={book} setId={setId} id={id} />
         </Col>
       ))}
       </Row>
       </Col>
       <Col>
-      <CommentArea bookId={this.state.id} /></Col>
+      <CommentArea bookId={id} /></Col>
       </Row>
       </Container>
       </Container>
     </>
   );
-}} 
+}
 
 export default BookList;
