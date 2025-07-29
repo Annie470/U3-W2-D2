@@ -7,6 +7,7 @@ const CommentArea =(props)=> {
 
    const [comments, setComments] = useState([])
    const [isError, setIsError]= useState(false)
+   const [forUp, setForUp] = useState(false)
   
 
  
@@ -26,7 +27,7 @@ const CommentArea =(props)=> {
       })
       .then((data) => {
         setIsError(false);
-        setCommets(data);
+        setComments(data);
       })
       .catch((error) => {
         setIsError(true);
@@ -35,7 +36,7 @@ const CommentArea =(props)=> {
   };
 
  
-  useEffect(()=> {chiamataCommenti()},[props.bookId])
+  useEffect(()=> {chiamataCommenti()},[props.bookId, forUp])
 
 
     return (
@@ -44,9 +45,9 @@ const CommentArea =(props)=> {
           <Alert variant="danger">Errore nel caricamento dei commenti</Alert>
         )}
        
-            <AddComment id={props.bookId} />
+            <AddComment id={props.bookId} setForUp={setForUp} />
              <h6 className="text-center mt-1">Recensioni:</h6>
-            <CommentList comments={comments} />
+            <CommentList comments={comments} setForUp={setForUp} forUp={forUp}/>
       </>
     );
   }
