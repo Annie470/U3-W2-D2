@@ -1,17 +1,17 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import { Alert } from 'react-bootstrap';
 import CommentList from './CommentList';
 import AddComment from './AddComment';
 
-class CommentArea extends Component {
-  state = {
-    comments: [],
-    isError: false,
-  };
+const CommentArea =(props)=> {
+
+   const [comments, setComments] = useState([])
+   const [isError, setIsError]= useState(false)
+  
 
  
-  chiamataCommenti = () => {
-    fetch(`https://striveschool-api.herokuapp.com/api/comments/${this.props.bookId}`, {
+  const chiamataCommenti = () => {
+    fetch(`https://striveschool-api.herokuapp.com/api/comments/${props.bookId}`, {
       headers: {
         Authorization:
           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODgyMWYzMmZlMzZkMDAwMTU5NzU4MTYiLCJpYXQiOjE3NTMzNTgxMzAsImV4cCI6MTc1NDU2NzczMH0.e0s40I7Kn-R4ZbRhY2HdP17MOyFqP76G-kLpdCuZ1Xs',
@@ -25,33 +25,31 @@ class CommentArea extends Component {
         }
       })
       .then((data) => {
-        this.setState({ comments: data, isError: false });
+        setIsError(false);
+        setCommets(data);
       })
       .catch((error) => {
-        this.setState({ isError: true });
+        setIsError(true);
         console.error(error);
       });
   };
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.bookId !== this.props.bookId && this.props.bookId) {
-      this.chiamataCommenti();
-    }
-  }
+ 
+  useEffect(()=> {chiamataCommenti()},[props.bookId])
 
-  render() {
+
     return (
       <>
-        {this.state.isError && (
+        {isError && (
           <Alert variant="danger">Errore nel caricamento dei commenti</Alert>
         )}
        
-            <AddComment id={this.props.bookId} />
+            <AddComment id={props.bookId} />
              <h6 className="text-center mt-1">Recensioni:</h6>
-            <CommentList comments={this.state.comments} />
+            <CommentList comments={comments} />
       </>
     );
   }
-}
+
 
 export default CommentArea;
